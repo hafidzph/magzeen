@@ -1,4 +1,4 @@
-import { Article } from "@/types/news";
+import { InternationalNews, News } from "@/types/news";
 import axios from "axios";
 
 const BASE_URL = process.env.BASE_URL_NEWS_API;
@@ -28,7 +28,7 @@ export async function getNews(source: string, category: string) {
       return null;
     }
 
-    const data = response.data.data.posts.map((post) => ({
+    const data = response.data.data.posts.map((post: News) => ({
       ...post,
       source,
       category,
@@ -40,15 +40,27 @@ export async function getNews(source: string, category: string) {
   }
 }
 
-export async function getTopHeadlines() {
+export async function getTopHeadlines(page: number, limit: number) {
   try {
     const res = await axios.get(
       `${BASE_URL_NEWSAPI}/top-headlines?country=us&apiKey=${API_KEY}`
     );
 
-    return res.data.articles.filter(
-      (article: Article) => article.title !== "[Removed]"
+    const news = res.data.articles.filter(
+      (article: InternationalNews) =>
+        article.title !== "[Removed]" && article.urlToImage
     );
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedNews = news.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(news.length / limit);
+
+    return {
+      news: paginatedNews,
+      totalPages,
+      currentPage: page,
+    };
   } catch (e) {
     throw new Error((e as Error).message);
   }

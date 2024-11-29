@@ -13,9 +13,9 @@ import { getWeather } from "@/lib/api/weather";
 
 export default async function Home() {
   const data = await getWeather(-6.2, 106.816666);
-  const featuredNews = await getFeaturedNews();
+  const featuredNews = await getFeaturedNews(1, 5);
   const breakingNews = await getBreakingNews();
-  const internationalNews = await getTopHeadlines();
+  const internationalNews = await getTopHeadlines(1, 5);
 
   const { province } = data.data[0].location;
   const { t, hu, ws, image, weather_desc } = data.data[0].weather[0][0];
@@ -35,12 +35,12 @@ export default async function Home() {
         />
         <ArticleItems
           title="Berita Unggulan"
-          news={featuredNews}
+          news={featuredNews.news}
           variant="featured"
         />
         <ArticleItems
           title="Berita Internasional"
-          news={internationalNews}
+          news={internationalNews.news}
           variant="international"
         />
       </div>

@@ -41,7 +41,6 @@ export function generatePaginationRange(
     range.push("...");
   }
 
-  // Always show last page
   if (totalPages > 1) {
     range.push(totalPages);
   }

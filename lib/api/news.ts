@@ -28,7 +28,7 @@ export async function getNews(source: string, category: string) {
       return null;
     }
 
-    const data = response.data.data.posts.slice(0, 1).map((post: object) => ({
+    const data = response.data.data.posts.map((post) => ({
       ...post,
       source,
       category,
@@ -54,7 +54,7 @@ export async function getTopHeadlines() {
   }
 }
 
-export async function getFeaturedNews() {
+export async function getFeaturedNews(page: number, limit: number) {
   const newsPromises = newsSources.map(({ source, category }) =>
     getNews(source, category).catch((error) => {
       console.error(`Error fetching news from ${source}:`, error);
@@ -67,7 +67,18 @@ export async function getFeaturedNews() {
     (news): news is NonNullable<typeof news> => news !== null
   );
 
-  return validNews.flat();
+  const allNews = validNews.flat();
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedNews = allNews.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(allNews.length / limit);
+
+  return {
+    news: paginatedNews,
+    totalPages,
+    currentPage: page,
+  };
 }
 
 export async function getBreakingNews() {

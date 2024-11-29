@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Pagination,
@@ -9,6 +10,8 @@ import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NewsItem } from "./news-item";
 import { News } from "@/types/news";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 interface PaginatedNewsItemsProps {
   news: News[];
@@ -25,6 +28,8 @@ export const PaginatedNewsItems = ({
   totalPages,
   title,
 }: PaginatedNewsItemsProps) => {
+  const pathname = usePathname();
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-8">{title}</h1>
@@ -60,7 +65,15 @@ export const PaginatedNewsItems = ({
                   className="text-base"
                   asChild
                 >
-                  <a href={`/featured-news?page=${pageNum}`}>{pageNum}</a>
+                  <Link
+                    href={
+                      pathname.includes("featured-news")
+                        ? `/featured-news?page=${currentPage + 1}`
+                        : `/international-news?page=${currentPage + 1}`
+                    }
+                  >
+                    {pageNum}
+                  </Link>
                 </Button>
               )}
             </PaginationItem>
@@ -73,10 +86,16 @@ export const PaginatedNewsItems = ({
               disabled={currentPage >= totalPages}
               asChild
             >
-              <a href={`/featured-news?page=${currentPage + 1}`}>
+              <Link
+                href={
+                  pathname.includes("featured-news")
+                    ? `/featured-news?page=${currentPage + 1}`
+                    : `/international-news?page=${currentPage + 1}`
+                }
+              >
                 Selanjutnya
                 <ChevronRight className="h-4 w-4 ml-2" />
-              </a>
+              </Link>
             </Button>
           </PaginationItem>
         </PaginationContent>

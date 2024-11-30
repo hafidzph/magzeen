@@ -19,7 +19,7 @@ export default async function InternationalNews({
     title: item.title,
     source: item.source.name,
     thumbnail: item.urlToImage,
-    category: "Internasional",
+    category: "world",
     description: item.description,
   }));
 

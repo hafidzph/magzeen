@@ -6,14 +6,14 @@ import { ArticleItems } from "@/components/layout/article-items";
 import { Weather } from "@/components/layout/weather";
 import {
   getBreakingNews,
-  getFeaturedNews,
+  getHomepageFeaturedNews,
   getTopHeadlines,
 } from "@/lib/api/news";
 import { getWeather } from "@/lib/api/weather";
 
 export default async function Home() {
   const data = await getWeather(-6.2, 106.816666);
-  const featuredNews = await getFeaturedNews(1, 5);
+  const featuredNews = await getHomepageFeaturedNews();
   const breakingNews = await getBreakingNews();
   const internationalNews = await getTopHeadlines(1, 5);
 
@@ -35,7 +35,7 @@ export default async function Home() {
         />
         <ArticleItems
           title="Berita Unggulan"
-          news={featuredNews.news}
+          news={featuredNews}
           variant="featured"
         />
         <ArticleItems

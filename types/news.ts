@@ -23,3 +23,12 @@ export type News = {
   source: string;
   category: string;
 };
+
+export type NewsUniversal = {
+  title: string;
+  thumbnail?: string;
+  urlToImage?: string;
+  source: string | Source;
+  category: string;
+  description: string;
+};

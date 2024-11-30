@@ -67,7 +67,7 @@ export const PaginatedNewsItems = ({
                 >
                   <Link
                     href={
-                      pathname.includes("featured-news")
+                      pathname === "/featured-news"
                         ? `/featured-news?page=${currentPage + 1}`
                         : `/international-news?page=${currentPage + 1}`
                     }
@@ -88,7 +88,7 @@ export const PaginatedNewsItems = ({
             >
               <Link
                 href={
-                  pathname.includes("featured-news")
+                  pathname === "/featured-news"
                     ? `/featured-news?page=${currentPage + 1}`
                     : `/international-news?page=${currentPage + 1}`
                 }

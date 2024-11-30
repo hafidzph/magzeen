@@ -2,13 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { FC } from "react";
-import { formatRelativeTime } from "@/lib/utils/utils";
+import { formatRelativeTime, slugify } from "@/lib/utils/utils";
 
 interface BreakingNews {
   title: string;
   thumbnail: string;
   source: string;
   pubDate: string;
+  category: string;
 }
 
 interface BreakingNewsProps {
@@ -23,7 +24,10 @@ export const BreakingNews: FC<BreakingNewsProps> = ({
     <section className="w-full">
       <div className="grid gap-4">
         {newsSlices.map((news, index) => (
-          <Link key={index} href="">
+          <Link
+            key={index}
+            href={`/${news.source}/${news.category}/${slugify(news.title)}`}
+          >
             <Card className="group overflow-hidden relative h-[550px] w-full">
               <div className="absolute inset-0">
                 <Image

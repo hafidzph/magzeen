@@ -41,7 +41,7 @@ export async function getNews(source: string, category: string) {
   }
 }
 
-export async function getNewsyByCategory(
+export async function getNewsByCategory(
   category: string,
   page: number,
   limit: number

@@ -1,5 +1,5 @@
 import { PaginatedNewsItems } from "@/components/layout/paginated-news-items";
-import { getNewsyByCategory } from "@/lib/api/news";
+import { getNewsByCategory } from "@/lib/api/news";
 import { generatePaginationRange } from "@/lib/utils/utils";
 import { headers } from "next/headers";
 
@@ -14,7 +14,7 @@ export default async function CategoryNews({
 
   const currentPage = Number(searchParams.page) || 1;
   const limit = 9;
-  const { news, totalPages } = await getNewsyByCategory(
+  const { news, totalPages } = await getNewsByCategory(
     pathname,
     currentPage,
     limit

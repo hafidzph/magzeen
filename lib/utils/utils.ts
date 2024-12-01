@@ -115,6 +115,22 @@ export function unslugify(title: string): string {
   return title.replace(/-/g, " ");
 }
 
+export const getHref = (pathname: string, page: number | string) => {
+  if (pathname.startsWith("/source/")) {
+    return `${pathname}?page=${page}`;
+  }
+
+  if (pathname === "/featured-news") {
+    return `/featured-news?page=${page}`;
+  }
+
+  if (pathname.startsWith("/category/")) {
+    return `${pathname}?page=${page}`;
+  }
+
+  return `/international-news?page=${page}`;
+};
+
 export const categories: { icon: IconType; title: string; color: string }[] = [
   {
     icon: FaRegNewspaper,

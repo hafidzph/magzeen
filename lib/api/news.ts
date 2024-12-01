@@ -41,6 +41,37 @@ export async function getNews(source: string, category: string) {
   }
 }
 
+export async function getNewsyByCategory(
+  category: string,
+  page: number,
+  limit: number
+) {
+  const newsPromises = newsSources.map(({ source }) =>
+    getNews(source, category).catch((error) => {
+      console.error(`Error fetching news from ${category}:`, error);
+      return null;
+    })
+  );
+
+  const newsArray = await Promise.all(newsPromises);
+  const sourceNews = newsArray.filter(
+    (news): news is NonNullable<typeof news> => news !== null
+  );
+
+  const allNews = sourceNews.flat();
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedNews = allNews.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(allNews.length / limit);
+
+  return {
+    news: paginatedNews,
+    totalPages,
+    currentPage: page,
+  };
+}
+
 export async function getSourceNews(
   source: string,
   page: number,

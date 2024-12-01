@@ -19,6 +19,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "../ui/breadcrumb";
+import { getHref } from "@/lib/utils/utils";
 
 interface PaginatedNewsItemsProps {
   news: News[];
@@ -36,20 +37,10 @@ export const PaginatedNewsItems = ({
   title,
 }: PaginatedNewsItemsProps) => {
   const pathname = usePathname();
-  const previous = pathname.startsWith("/source/")
-    ? `${pathname}?page=${currentPage - 1}`
-    : pathname === "/featured-news"
-    ? `/featured-news?page=${currentPage - 1}`
-    : `/international-news?page=${currentPage - 1}`;
-  const next = pathname.startsWith("/source/")
-    ? `${pathname}?page=${currentPage + 1}`
-    : pathname === "/featured-news"
-    ? `/featured-news?page=${currentPage + 1}`
-    : `/international-news?page=${currentPage + 1}`;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {pathname.startsWith("/source/") ? (
+      {pathname.startsWith("/source/") || pathname.startsWith("/category/") ? (
         <Breadcrumb className="mb-10">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -58,7 +49,9 @@ export const PaginatedNewsItems = ({
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
-            <BreadcrumbItem className="text-lg">Source</BreadcrumbItem>
+            <BreadcrumbItem className="text-lg">
+              {pathname.startsWith("/source/") ? "Source" : "Category"}
+            </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem className="text-lg">
               {pathname.split("/")[2].toLocaleUpperCase()}
@@ -90,7 +83,7 @@ export const PaginatedNewsItems = ({
                   disabled={currentPage <= 1}
                   asChild
                 >
-                  <a href={previous}>
+                  <a href={getHref(pathname, currentPage - 1)}>
                     <ChevronLeft className="h-4 w-4 mr-2" />
                     Sebelumnya
                   </a>
@@ -107,17 +100,7 @@ export const PaginatedNewsItems = ({
                       className="text-base"
                       asChild
                     >
-                      <Link
-                        href={
-                          pathname.startsWith("/source/")
-                            ? `${pathname}?page=${pageNum}`
-                            : pathname === "/featured-news"
-                            ? `/featured-news?page=${pageNum}`
-                            : `/international-news?page=${pageNum}`
-                        }
-                      >
-                        {pageNum}
-                      </Link>
+                      <Link href={getHref(pathname, pageNum)}>{pageNum}</Link>
                     </Button>
                   )}
                 </PaginationItem>
@@ -130,7 +113,7 @@ export const PaginatedNewsItems = ({
                   disabled={currentPage >= totalPages}
                   asChild
                 >
-                  <Link href={next}>
+                  <Link href={getHref(pathname, currentPage + 1)}>
                     Selanjutnya
                     <ChevronRight className="h-4 w-4 ml-2" />
                   </Link>

@@ -4,6 +4,8 @@ import * as React from "react";
 import Link from "next/link";
 
 import { categories, cn } from "@/lib/utils/utils";
+import camelCase from "camelcase";
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -44,7 +46,11 @@ export const Navbar: React.FC = () => {
             <NavigationMenuContent className="custom-content">
               <ul className="grid w-[50px] gap-3 p-4 md:w-[150px] md:grid-cols-2 lg:w-[250px]">
                 {newsSource.map((news) => (
-                  <ListItem key={news} title={news} />
+                  <ListItem
+                    key={news}
+                    title={news}
+                    href={`/source/${news.toLowerCase()}`}
+                  />
                 ))}
               </ul>
             </NavigationMenuContent>
@@ -57,7 +63,13 @@ export const Navbar: React.FC = () => {
             <NavigationMenuContent className="custom-content">
               <ul className="grid w-[650px] gap-3 p-4 md:w-[850px] md:grid-cols-6 lg:w-[1050px]">
                 {categories.map((category) => (
-                  <ListItem key={category.title} title={category.title}>
+                  <ListItem
+                    key={category.title}
+                    title={category.title}
+                    href={`/category/${camelCase(
+                      category.title.toLowerCase()
+                    )}`}
+                  >
                     <category.icon className={`${category.color}`} />
                   </ListItem>
                 ))}
@@ -103,13 +115,13 @@ function Icon(
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<"a"> & { href: string }
+>(({ className, href, title, children, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
         <Link
-          href={`/source/${title?.toLowerCase()}`}
+          href={href}
           ref={ref}
           className={cn(
             "flex items-center gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",

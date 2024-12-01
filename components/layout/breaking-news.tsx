@@ -26,7 +26,9 @@ export const BreakingNews: FC<BreakingNewsProps> = ({
         {newsSlices.map((news, index) => (
           <Link
             key={index}
-            href={`/${news.source}/${news.category}/${slugify(news.title)}`}
+            href={`/source/${news.source}/${news.category}/${slugify(
+              news.title
+            )}`}
           >
             <Card className="group overflow-hidden relative h-[550px] w-full">
               <div className="absolute inset-0">

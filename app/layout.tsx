@@ -15,9 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="flex flex-col gap-8 overflow-x-hidden">
+      <body className="flex flex-col min-h-screen overflow-x-hidden gap-16">
         <Navbar />
-        {children}
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>

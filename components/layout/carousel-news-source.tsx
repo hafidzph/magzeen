@@ -4,8 +4,9 @@ import React, { FC } from "react";
 import { Carousel, CarouselContent, CarouselItem } from "../ui/carousel";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
+import Link from "next/link";
 
-const categories = [
+const sources = [
   {
     name: "Antara",
     image: "/images/antara.png",
@@ -71,25 +72,27 @@ export const NewsSourceCarousel: FC = () => {
       className="w-full mx-auto rounded-lg"
     >
       <CarouselContent>
-        {categories.map((category, index) => (
+        {sources.map((source, index) => (
           <CarouselItem
             key={index}
             className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/7"
           >
-            <div className="h-24 rounded-xl overflow-hidden relative duration-300 transition-all hover:scale-95 cursor-pointer">
-              <Image
-                src={category.image}
-                alt={`${category.name} logo`}
-                width={300}
-                height={200}
-                className="absolute w-full h-full object-contain"
-              />
-              <div className="absolute inset-0 bg-stone-600 bg-opacity-60 backdrop-blur-sm"></div>
-              <div className="flex h-full items-center justify-center relative z-10">
-                <span className="text-lg font-semibold text-white">
-                  {category.name}
-                </span>
-              </div>
+            <div className="h-24 rounded-xl overflow-hidden relative duration-300 transition-all hover:scale-95 ">
+              <Link href={`/source/${source.name.toLowerCase()}`}>
+                <Image
+                  src={source.image}
+                  alt={`${source.name} logo`}
+                  width={300}
+                  height={200}
+                  className="absolute w-full h-full object-contain"
+                />
+                <div className="absolute inset-0 bg-stone-600 bg-opacity-60 backdrop-blur-sm"></div>
+                <div className="flex h-full items-center justify-center relative z-10">
+                  <span className="text-lg font-semibold text-white">
+                    {source.name}
+                  </span>
+                </div>
+              </Link>
             </div>
           </CarouselItem>
         ))}

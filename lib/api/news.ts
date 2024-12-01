@@ -1,6 +1,6 @@
 import { InternationalNews, News } from "@/types/news";
 import axios from "axios";
-import { slugify, unslugify } from "../utils/utils";
+import { categories, slugify, unslugify } from "../utils/utils";
 
 const BASE_URL = process.env.BASE_URL_NEWS_API;
 const BASE_URL_NEWSAPI = process.env.BASE_URL_NEWSAPI;
@@ -39,6 +39,37 @@ export async function getNews(source: string, category: string) {
   } catch {
     return null;
   }
+}
+
+export async function getSourceNews(
+  source: string,
+  page: number,
+  limit: number
+) {
+  const newsPromises = categories.map(({ title: category }) =>
+    getNews(source, category.toLowerCase()).catch((error) => {
+      console.error(`Error fetching news from ${source}:`, error);
+      return null;
+    })
+  );
+
+  const newsArray = await Promise.all(newsPromises);
+  const sourceNews = newsArray.filter(
+    (news): news is NonNullable<typeof news> => news !== null
+  );
+
+  const allNews = sourceNews.flat();
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = startIndex + limit;
+  const paginatedNews = allNews.slice(startIndex, endIndex);
+  const totalPages = Math.ceil(allNews.length / limit);
+
+  return {
+    news: paginatedNews,
+    totalPages,
+    currentPage: page,
+  };
 }
 
 async function getInternationalNews() {

@@ -39,7 +39,7 @@ export const ArticleItems: FC<ArticleItemsProps> = ({
         {variant === "international" && (
           <Card className="md:col-span-2 group cursor-pointer overflow-hidden bg-primary-foreground">
             <Link
-              href={`/${
+              href={`/source/${
                 typeof featured.source === "object" &&
                 slugify(featured.source.name)
               }/world/${slugify(featured.title)}`}
@@ -76,7 +76,7 @@ export const ArticleItems: FC<ArticleItemsProps> = ({
         {variant === "featured" && (
           <Card className="md:col-span-2 group cursor-pointer overflow-hidden bg-primary-foreground">
             <Link
-              href={`${featured.source}/${featured.category}/${slugify(
+              href={`/source/${featured.source}/${featured.category}/${slugify(
                 featured.title
               )}`}
             >

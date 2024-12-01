@@ -21,29 +21,27 @@ export default async function Home() {
   const { t, hu, ws, image, weather_desc } = data.data[0].weather[0][0];
 
   return (
-    <div className="flex flex-col items-center w-full">
-      <div className="grid justify-center items-center gap-10 max-w-7xl mx-auto w-full">
-        <BreakingNews breakingNews={breakingNews} />
-        <NewsSourceCarousel />
-        <Weather
-          province={province}
-          t={t}
-          hu={hu}
-          ws={ws}
-          image={image}
-          weather_desc={weather_desc}
-        />
-        <ArticleItems
-          title="Berita Unggulan"
-          news={featuredNews}
-          variant="featured"
-        />
-        <ArticleItems
-          title="Berita Internasional"
-          news={internationalNews.news}
-          variant="international"
-        />
-      </div>
+    <div className="grid justify-center items-center gap-10 max-w-7xl mx-auto w-full">
+      <BreakingNews breakingNews={breakingNews} />
+      <NewsSourceCarousel />
+      <Weather
+        province={province}
+        t={t}
+        hu={hu}
+        ws={ws}
+        image={image}
+        weather_desc={weather_desc}
+      />
+      <ArticleItems
+        title="Berita Unggulan"
+        news={featuredNews}
+        variant="featured"
+      />
+      <ArticleItems
+        title="Berita Internasional"
+        news={internationalNews.news}
+        variant="international"
+      />
     </div>
   );
 }

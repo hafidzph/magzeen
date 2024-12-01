@@ -14,7 +14,7 @@ import { slugify } from "@/lib/utils/utils";
 export const RegularArticleCard: FC<{ news: NewsUniversal }> = ({ news }) => (
   <Card className="shadow-md transition-all duration-300 hover:scale-105 hover:shadow-xl hover:z-10 relative cursor-pointer">
     <Link
-      href={`/${
+      href={`/source/${
         typeof news.source === "string"
           ? news.source
           : slugify(news.source.name)

@@ -19,7 +19,7 @@ export const NewsItem = ({ news }: NewsItemProps) => {
   const { thumbnail, title, source, category, description } = news;
 
   return (
-    <Link href={`${slugify(source)}/${category}/${slugify(title)}`}>
+    <Link href={`/source/${slugify(source)}/${category}/${slugify(title)}`}>
       <Card className="group h-full overflow-hidden hover:shadow-lg transition-all duration-300">
         <div className="relative aspect-video overflow-hidden">
           <Image

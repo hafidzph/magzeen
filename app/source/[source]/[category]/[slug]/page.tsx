@@ -34,6 +34,7 @@ export default async function NewsDetail({
     description,
     thumbnail,
     urlToImage,
+    author,
   } = news;
 
   const relatedNews = await getRelatedNews(category, slug);
@@ -49,8 +50,12 @@ export default async function NewsDetail({
           )}
           <h1 className="text-4xl font-bold mb-4">{title}</h1>
           <div className="flex items-center text-muted-foreground mb-4">
-            <User className="w-4 h-4 mr-2" />
-            <span className="mr-4">HEHE</span>
+            {author && (
+              <>
+                <User className="w-4 h-4 mr-2" />
+                <span className="mr-4">{author}</span>
+              </>
+            )}
             <Clock className="w-4 h-4 mr-2" />
             <span>{format(pubDate ?? publishedAt, "dd LLLL yyyy")}</span>
           </div>

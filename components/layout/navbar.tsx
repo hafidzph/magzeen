@@ -78,7 +78,7 @@ export const Navbar: React.FC = () => {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <Link href="/docs" legacyBehavior passHref>
+            <Link href="/about-us" legacyBehavior passHref>
               <NavigationMenuLink
                 className="relative h-9 px-4 py-2 hover:after:scale-x-100 
                 after:absolute after:left-4 after:bottom-0.5 after:w-[15px] after:h-[4px] 
@@ -86,6 +86,19 @@ export const Navbar: React.FC = () => {
                 after:origin-left after:transition-transform after:duration-200 after:ease-out text-md"
               >
                 Tentang Kami
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link href="/contact" legacyBehavior passHref>
+              <NavigationMenuLink
+                className="relative h-9 px-4 py-2 hover:after:scale-x-100 
+                after:absolute after:left-4 after:bottom-0.5 after:w-[15px] after:h-[4px] 
+                after:rounded-lg after:bg-red-500 after:transform after:scale-x-0 
+                after:origin-left after:transition-transform after:duration-200 after:ease-out text-md"
+              >
+                Kontak
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
